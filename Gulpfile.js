@@ -2,15 +2,12 @@ const gulp = require("gulp");
 const gutil = require("gulp-util");
 const source = require("vinyl-source-stream");
 const buffer = require("vinyl-buffer");
-const chalk = require("chalk");
 const browserify = require("browserify");
 const babelify = require("babelify");
 const jshint = require("gulp-jshint");
 const rename = require("gulp-rename");
 const sass = require("gulp-ruby-sass");
 const autoprefixer = require("gulp-autoprefixer");
-const newer = require("gulp-newer");
-const concat = require("gulp-concat");
 const sourcemaps = require("gulp-sourcemaps");
 
 const paths = {
@@ -48,17 +45,6 @@ gulp.task("js", ["jshint"], function() {
     .pipe(rename("app.js"))
     .pipe(gulp.dest(paths.JS_DEST))
 });
-
-// gulp.task("copy-react", function() {
-//   return gulp.src("node_modules/react/dist/react.js")
-//     .pipe(newer("src/js/vendor/react.js"))
-//     .pipe(gulp.dest("src/js/vendor"));
-// });
-// gulp.task("copy-react-dom", function() {
-//   return gulp.src("node_modules/react-dom/dist/react-dom.js")
-//     .pipe(newer("src/js/vendor/react-dom.js"))
-//     .pipe(gulp.dest("src/js/vendor"));
-// });
 
 gulp.task("css", () =>
 	sass(paths.SCSS)
