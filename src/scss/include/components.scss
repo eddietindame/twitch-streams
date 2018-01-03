@@ -41,7 +41,14 @@ $bottomBarHeight: 30px;
     border-radius: 50%;
     float: right;
     margin: 14px 0 0 0;
-    background-color: $green;
+
+    &--online {
+      background-color: $green;
+    }
+
+    &--offline {
+      background-color: $red;
+    }
   }
 }
 
@@ -49,16 +56,34 @@ $bottomBarHeight: 30px;
   width: 100%;
 }
 
-.stream-info {
+.bottom-bar {
   height: $bottomBarHeight;
-  padding: 0 10px;
   color: white;
+
+  &__right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: $purple;
+    border-radius: 0 0 5px 0;
+  }
+
+  &__left {
+
+  }
+}
+
+.stream-title {
+  white-space: nowrap;
+  padding: 0 5px;
+  overflow: hidden;
+  height: $bottomBarHeight;
+  line-height: $bottomBarHeight;
 }
 
 .viewer-count {
-  position: relative;
-  float: right;
   line-height: $bottomBarHeight;
+  padding: 0 5px;
 
   &__icon {
     display: inline-block;

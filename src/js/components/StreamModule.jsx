@@ -30,11 +30,24 @@ class StreamModule extends Component {
     return (
       <div className="stream-module">
         <TopBar>
-          { this.props.children.user.display_name }
+          { {
+            displayName: this.props.children.user.display_name,
+            online: this.props.children.stream ? true : false
+          } }
         </TopBar>
         <a className="thumbnail" href={ "https://www.twitch.tv/" + this.props.children.user.display_name }>
           <img src={ this.getThumbnailUrl(200, 130) } alt="" />
         </a>
+        <div className="bottom-bar">
+          <div className="bottom-bar__left">
+            <div className="stream-title">{ this.props.children.stream ? this.props.children.stream.title : "Offline" }</div>
+          </div>
+          <div className="bottom-bar__right">
+            <div className="viewer-count">
+            { this.props.children.stream ? this.props.children.stream.viewer_count : "0" }
+            <i className="viewer-count__icon"></i></div>
+          </div>
+        </div>
       </div>
     );
   }
