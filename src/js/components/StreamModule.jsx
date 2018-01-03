@@ -2,10 +2,39 @@ import React, { Component } from 'react';
 import TopBar from './TopBar.jsx';
 
 class StreamModule extends Component {
+  // constructor(props) {
+  //   super(props);
+  // }
+
+  getThumbnailUrl(width, height) {
+    let thumbnailUrl = this.props.children.stream ? this.props.children.stream.thumbnail_url : "http://www.placehold.it/200x130";
+
+    return this.replaceString(
+      this.replaceString(thumbnailUrl, '{height}', height)
+      , '{width}', width);
+  }
+
+  replaceString(str, before, after) {
+    var regexp = new RegExp(before, 'gi');
+
+    if (/[A-Z]/.test(before[0])) {
+      var newAfter = after.charAt(0).toUpperCase() + after.slice(1)
+    } else {
+      var newAfter = after;
+    }
+
+    return str.replace(regexp, newAfter);
+  }
+
   render() {
     return (
       <div className="stream-module">
-        <TopBar></TopBar>
+        <TopBar>
+          { this.props.children.user.display_name }
+        </TopBar>
+        <a className="thumbnail" href={ "https://www.twitch.tv/" + this.props.children.user.display_name }>
+          <img src={ this.getThumbnailUrl(200, 130) } alt="" />
+        </a>
       </div>
     );
   }

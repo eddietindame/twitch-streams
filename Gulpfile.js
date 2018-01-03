@@ -4,11 +4,14 @@ const source = require("vinyl-source-stream");
 const buffer = require("vinyl-buffer");
 const browserify = require("browserify");
 const babelify = require("babelify");
+const webserver = require('gulp-webserver');
 const jshint = require("gulp-jshint");
 const rename = require("gulp-rename");
 const sass = require("gulp-ruby-sass");
 const autoprefixer = require("gulp-autoprefixer");
 const sourcemaps = require("gulp-sourcemaps");
+const opn = require('opn');
+// const cors = require('cors');
 
 const paths = {
   APP_ENTRY: "./src/js/index.jsx",
@@ -17,6 +20,32 @@ const paths = {
   CSS: "./build/assets/css",
   JS_DEST: "./build/assets/js"
 };
+
+const server = {
+  HOST: 'localhost',
+  PORT: '6969'
+}
+
+gulp.task('webserver', function() {
+  gulp.src( '.' )
+    .pipe(webserver({
+      host:             server.HOST,
+      port:             server.PORT,
+      livereload:       true,
+      directoryListing: true,
+      // middleware: function() {
+      //   return [cors()];
+      // }
+      proxies: [{
+        source: "http://localhost:6969/abc",
+        target: "http://www.google.com"
+      }]
+    }));
+});
+
+gulp.task('openbrowser', function() {
+  opn( 'http://' + server.HOST + ':' + server.PORT + '/build/index.html', {app: ['google chrome']} );
+});
 
 gulp.task("jshint", function() {
   return gulp.src(["./src/js/**/*.js"])
@@ -62,12 +91,17 @@ gulp.task("html", function() {
     .pipe(gulp.dest("./build"))
 })
 
+gulp.task("assets", function() {
+  return gulp.src("./src/assets/*.svg")
+    .pipe(gulp.dest("./build/assets/img"))
+})
+
 gulp.task("watch", function() {
   gulp.watch("src/scss/**/*.scss", ["css"]);
   gulp.watch(["src/js/**/*.js*"], ["js"]);
   gulp.watch(["src/index.html"], ["html"]);
 });
 
-gulp.task("build", ["js","css","html"]);
-
-gulp.task("default",["build","watch"]);
+gulp.task("build", ["js","css","html","assets"]);
+gulp.task("server", ["watch","webserver"]);
+gulp.task("default",["build","server","openbrowser"]);
