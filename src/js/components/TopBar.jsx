@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class TopBar extends Component {
   render() {
@@ -9,8 +9,8 @@ class TopBar extends Component {
         </a>
         <div className={ "top-bar__button " + (this.props.children.online ? "top-bar__button--online" : "top-bar__button--offline") }></div>
       </div>
-    );
+    )
   }
 }
 
-export default TopBar;
+export default TopBar

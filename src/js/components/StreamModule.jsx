@@ -1,29 +1,29 @@
-import React, { Component } from 'react';
-import TopBar from './TopBar.jsx';
+import React, { Component } from 'react'
+import TopBar from './TopBar.jsx'
 
 class StreamModule extends Component {
   // constructor(props) {
-  //   super(props);
+  //   super(props)
   // }
 
   getThumbnailUrl(width, height) {
-    let thumbnailUrl = this.props.children.stream ? this.props.children.stream.thumbnail_url : "http://www.placehold.it/200x130";
+    let thumbnailUrl = this.props.children.stream ? this.props.children.stream.thumbnail_url : "http://www.placehold.it/200x130"
 
     return this.replaceString(
       this.replaceString(thumbnailUrl, '{height}', height)
-      , '{width}', width);
+      , '{width}', width)
   }
 
   replaceString(str, before, after) {
-    var regexp = new RegExp(before, 'gi');
+    var regexp = new RegExp(before, 'gi')
 
     if (/[A-Z]/.test(before[0])) {
       var newAfter = after.charAt(0).toUpperCase() + after.slice(1)
     } else {
-      var newAfter = after;
+      var newAfter = after
     }
 
-    return str.replace(regexp, newAfter);
+    return str.replace(regexp, newAfter)
   }
 
   render() {
@@ -49,8 +49,8 @@ class StreamModule extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default StreamModule;
+export default StreamModule
